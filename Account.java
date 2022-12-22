@@ -1,4 +1,3 @@
-package BankApp;
 
 public class Account {
 
@@ -43,13 +42,17 @@ public class Account {
         }
     }
 
-    public void transfer(Account userAccount1, Account userAccount2, double amountToTransfer){
-        double user1Balance = userAccount1.getAccountBalance() ;
-        double user2Balance = userAccount1.getAccountBalance() ;
+//    public static void transfer(Account userAccount1, double amountToTransfer){
+//        double user1Balance = userAccount1.getAccountBalance() ;
+//        double user2Balance = userAccount1.getAccountBalance() ;
+//
+//        user1Balance = user1Balance - amountToTransfer;
+//        user2Balance = user2Balance + amountToTransfer;
+//    }
 
-        user1Balance = user1Balance - amountToTransfer;
-        user2Balance = user2Balance + amountToTransfer;
+
+    public void setName(String name) {
+	  fullName = name ;
     }
-
 
 }
