@@ -1,72 +1,47 @@
-package chapter2.BankApp;
+package BankApp;
 
 public class Account {
+    private int balance;
+    private String pin;
+    private int accountNumber;
+    private String accountName;
 
-    private int passcode;
-    private String fullName;
-    private double accountBalance;
+    public Account(int accountNumber, String accountName, String pin) {
+        this.accountNumber = accountNumber;
+        this.accountName = accountName;
+        this.pin = pin;
 
+    }
 
-
-    public Account(String userName){
-        fullName = userName ;
+    public void deposit(int amount) {
+        if (amountGreaterThanZero(amount)) balance += amount;
     }
 
 
-    public String getName() {
-        return fullName;
+    public int checkBalance(String pin) {
+        if (pinIsCorrect(pin)) return balance;
+        return 0;
     }
 
-    public double getAccountBalance() {
-        return accountBalance;
+    private boolean pinIsCorrect(String pin) {
+        return  this.pin.equals(pin);
     }
 
-    public void deposit(double cash){
-        if (cash <= 0){
-            System.out.println("Invalid deposit amount! ");
-        }
-        else {
-            accountBalance += cash ;
-        }
-    }
-
-    public void withdraw(double cash, int pin){
-        if (passcode == pin){
-            if (cash <= 0 ){
-                System.out.println("Invalid withdrawal amount!");
-            } else {
-                if (cash > accountBalance){
-                    System.out.println("Insufficient balance! ");
-                } else {
-                    accountBalance -= cash ;
-                }
-            }
-        } else {
-            System.out.println("Incorrect passcode!");
+    public void withdraw(int amount, String pin) {
+        boolean amountIsValid = amountGreaterThanZero(amount) && withdrawalAmountIsValid(amount) ;
+        if (pinIsCorrect(pin)){
+            if (amountIsValid) balance -= amount;
         }
     }
 
-
-    public void setName(String name) {
-        fullName = name ;
+    private boolean amountGreaterThanZero(int amount){
+        return amount > 0 ;
     }
-
-    public void setPasscode(int passcode) {
-        this.passcode = passcode;
+    private boolean withdrawalAmountIsValid(int amount){
+        return this.balance > amount;
     }
-
-    public static void transfer(Account userAccount1, double amountToTransfer, Account userAccount2){
-
-        if(userAccount1.getAccountBalance() > amountToTransfer){
-            double user1Balance = userAccount1.getAccountBalance() - amountToTransfer;
-            double user2Balance = userAccount2.getAccountBalance() + amountToTransfer;
-            System.out.printf("%nAccount balance is: %.2f%nAccount1 balance is: %.2f %n", user1Balance, user2Balance);
-        }
-        else {
-            System.out.println("Invalid transfer amount");
-        }
-
-
+    public int getAccountNumber() {
+        return accountNumber;
     }
 
 }

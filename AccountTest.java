@@ -1,33 +1,58 @@
-package chapter2.BankApp;
+package BankApp;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class AccountTest {
+    Account account;
+
+    @BeforeEach
+    public void setUp(){
+        account = new Account(1, "Inem", "1234");
+    }
 
 
-public class AccountTest{
-	public static void main(String[] args) {
-		Account account = new Account("Sherif");
-		Account account1 = new Account("Adeola");
-
-		account.setName("Sherif Ola");
-		account1.setName("Adeola Adeniyi");
-
-		String accountName = account.getName();
-
-		double accountBalance;
-		System.out.printf("My account name is %s%n", accountName);
-
-		account.deposit(500.00);
-		System.out.printf("%s deposit %n", accountName);
-
-		account1.deposit(500);
-
-		accountBalance = account.getAccountBalance();
-		double accountBalance1 = account1.getAccountBalance();
+    @Test
+    public void depositTest(){
+        account.deposit(1500);
+        assertEquals(1500, account.checkBalance("1234"));
+    }
 
 
-		System.out.printf("%s Account balance is %.3f%n", accountName, accountBalance);
+    @Test public void checkBalanceWithWrongPinReturnsZero(){
+        account.deposit(1500);
+        assertEquals(0, account.checkBalance("1254"));
+    }
 
-		Account.transfer(account, 300, account1);
+    @Test
+    public void withDrawMoneyTest(){
+        account.deposit(8000);
+        account.withdraw(4000, "1234");
+        assertEquals(4000, account.checkBalance("1234"));
+    }
 
+    @Test
+    public void withdrawWithWrongPinDoesNotWork(){
+        account.deposit(8000);
+        account.withdraw(4000, "1254");
+        assertEquals(8000, account.checkBalance("1234"));
 
-	}
+    }
+
+    @Test
+    void depositWithWrongAmountDoesNothing(){
+        account.deposit(-233);
+        assertEquals(0 , account.checkBalance("1234"));
+    }
+
+    @Test
+    void withdrawAmountGreaterThanAmountDoesNothing(){
+        account.deposit(1000);
+        account.withdraw(1500, "1234");
+        assertEquals(1000, account.checkBalance("1234"));
+    }
+
 
 }
